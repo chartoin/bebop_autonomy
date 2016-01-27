@@ -3,11 +3,11 @@
 build_environment: ubuntu1404
 
 # language setting
-language: python
+# language: python
 
 # version numbers
-python:
-  - "2.7"
+#python:
+#  - "2.7"
 
 env:
   global:
