@@ -10,6 +10,8 @@ python:
 env:
   - CATKIN_WS=~/catkin_ws
   - CATKIN_WS_SRC=${CATKIN_WS}/src
+  - CI_ROS_DISTRO="indigo"
+  - BUILD_ROOT=`pwd`
 
 install:
   - sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
@@ -19,11 +21,11 @@ install:
   - sudo rosdep init
   - rosdep update
   # Use rosdep to install all dependencies (including ROS itself)
-  - rosdep install --from-paths ./ -i -y --rosdistro indigo
+  - rosdep install --from-paths ./ -i -y --rosdistro $CI_ROS_DISTRO
 script:
   - source /opt/ros/$CI_ROS_DISTRO/setup.bash
   - mkdir -p $CATKIN_WS_SRC
-  - ln -s $TRAVIS_BUILD_DIR $CATKIN_WS_SRC
+  - ln -s $BUILD_ROOT $CATKIN_WS_SRC
   - cd $CATKIN_WS
   - catkin init
   # Enable install space
