@@ -8,10 +8,11 @@ python:
   - "2.7"
 
 env:
-  - CATKIN_WS=~/catkin_ws
-  - CATKIN_WS_SRC=${CATKIN_WS}/src
-  - CI_ROS_DISTRO="indigo"
-  - BUILD_ROOT=`pwd`
+  global:
+    - CATKIN_WS=~/catkin_ws
+    - CATKIN_WS_SRC=${CATKIN_WS}/src
+    - CI_ROS_DISTRO="indigo"
+    - BUILD_ROOT=`pwd`
 
 install:
   - sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
