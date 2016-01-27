@@ -16,6 +16,7 @@
     </node>
 
     <node pkg="joy_teleop" type="joy_teleop.py" name="joy_teleop">
+      <remap from="cmd_vel" to="/joy/cmd_vel" />
     </node>
   </group>
 

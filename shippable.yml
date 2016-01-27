@@ -15,9 +15,6 @@ env:
     - CATKIN_WS_SRC=${CATKIN_WS}/src
     - CI_ROS_DISTRO="indigo"
 
-before_install:
-  - echo "Debug: $CATKIN_WS - $CATKIN_WS_SRC - $CI_ROS_DISTR"
-
 install:
   - sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
   - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
