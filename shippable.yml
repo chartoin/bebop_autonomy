@@ -1,3 +1,5 @@
+# This apparantly requires pre-configuration in settings
+# shippable.yml is almost 100% compatible with travis.yml
 build_environment: ubuntu1404
 
 # language setting
@@ -9,10 +11,12 @@ python:
 
 env:
   global:
-    - CATKIN_WS=~/catkin_ws
+    - CATKIN_WS=$HOME/catkin_ws
     - CATKIN_WS_SRC=${CATKIN_WS}/src
     - CI_ROS_DISTRO="indigo"
-    - BUILD_ROOT=`pwd`
+
+before_install:
+  - echo "Debug: $CATKIN_WS - $CATKIN_WS_SRC - $CI_ROS_DISTR"
 
 install:
   - sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
@@ -26,7 +30,7 @@ install:
 script:
   - source /opt/ros/$CI_ROS_DISTRO/setup.bash
   - mkdir -p $CATKIN_WS_SRC
-  - ln -s $BUILD_ROOT $CATKIN_WS_SRC
+  - ln -s $TRAVIS_BUILD_DIR $CATKIN_WS_SRC
   - cd $CATKIN_WS
   - catkin init
   # Enable install space
