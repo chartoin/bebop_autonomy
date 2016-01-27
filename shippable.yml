@@ -22,7 +22,8 @@ install:
   - sudo apt-get install -qq -y python-rosdep python-pip
   - sudo pip install -U catkin_pkg
   - sudo pip install -U catkin_tools
-  - sudo rosdep init
+  # rosdep init is not needed when building agains sr-indigo images
+  #- sudo rosdep init
   - rosdep update
   # Use rosdep to install all dependencies (including ROS itself)
   - rosdep install --from-paths ./ -i -y --rosdistro $CI_ROS_DISTRO
