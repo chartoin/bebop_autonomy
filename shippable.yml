@@ -19,9 +19,9 @@ env:
     - PYVE_DIR=$HOME/pythonve
     - CATKIN_WS=$HOME/catkin_ws
     - CATKIN_WS_SRC=${CATKIN_WS}/src
-  # matrix
-  - CI_ROS_DISTRO="indigo"
-  - CI_ROS_DISTRO="jade"
+  matrix:
+    - CI_ROS_DISTRO="indigo"
+    - CI_ROS_DISTRO="jade"
 
 # shippable creates a python virtualenv with system-site-packages disabled.
 # This creates issues for catkin, since some of its dependencies are fetched
