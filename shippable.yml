@@ -18,11 +18,12 @@ env:
 install:
   #- sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
   #- wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
+  - deactivate
   - sudo apt-get update -qq
-  - sudo apt-get install -qq -y python-rosdep
-  - pip install -U empy
-  - pip install -U catkin_pkg
-  - pip install -U catkin_tools
+  - sudo apt-get install -qq -y python-rosdep python-catkin-tools
+  #- pip install -U empy
+  #- pip install -U catkin_pkg
+  #- pip install -U catkin_tools
   # rosdep init is not needed when building agains sr-indigo images
   #- sudo rosdep init
   - rosdep update
@@ -37,8 +38,8 @@ script:
   # Enable install space
   #- catkin config --install
   # Build [and Install] packages
-  - catkin build --limit-status-rate 0.1 --no-notify -DCMAKE_BUILD_TYPE=Release
+  - catkin build --no-status -v --no-notify -DCMAKE_BUILD_TYPE=Release
   # Build tests
-  - catkin build --limit-status-rate 0.1 --no-notify --make-args tests
+  - catkin build --no-status -v --no-notify --make-args tests
   # Run tests
   #- catkin run_tests
