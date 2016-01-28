@@ -5,7 +5,7 @@
 
 # This apparantly requires pre-configuration in settings
 # shippable.yml is almost 100% compatible with travis.yml
-build_environment: ubuntu/trusty
+build_environment: ubuntu:14.04
 
 # language setting
 language: python
