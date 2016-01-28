@@ -44,7 +44,7 @@ install:
   - sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
   - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
   - sudo apt-get update -qq
-  - sudo apt-get install -qq -y python-rosdep python-catkin-tools
+  - sudo apt-get install -qq -y python-rosdep python-catkin-tools curl
   # Note: rosdep init is not needed when building against sr-indigo images
   - sudo rosdep init
   - rosdep update
