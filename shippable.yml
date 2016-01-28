@@ -1,6 +1,11 @@
+# Alternative approach:
+# - http://wiki.ros.org/CIs#Shadow_Robot.27s_Build_Tools
+# - http://sr-build-tools.readthedocs.org/en/latest/ansible/roles/ci/doc/setup/shippable/
+
+
 # This apparantly requires pre-configuration in settings
 # shippable.yml is almost 100% compatible with travis.yml
-build_environment: ubuntu1404
+build_environment: ubuntu/trusty
 
 # language setting
 language: python
@@ -14,8 +19,21 @@ env:
     - PYVE_DIR=$HOME/pythonve
     - CATKIN_WS=$HOME/catkin_ws
     - CATKIN_WS_SRC=${CATKIN_WS}/src
-    - CI_ROS_DISTRO="indigo"
+  # matrix
+  - CI_ROS_DISTRO="indigo"
+  - CI_ROS_DISTRO="jade"
 
+# shippable creates a python virtualenv with system-site-packages disabled.
+# This creates issues for catkin, since some of its dependencies are fetched
+# via apt-get.
+# TravisCI supports the following tag to enable system-site-packages:
+#
+# virtualenv:
+#   system_site_packages: true
+#
+# The workaround on shippable is to create and activate another virtualenv
+# idea from: https://bitbucket.org/pysph/pysph/src/1fe478682a41ac7847b88b151bf27478c811145a/shippable.yml?fileviewer=file-view-default
+#
 before_install:
   - rm -rf $PYVE_DIR
   - mkdir -p $PYVE_DIR
@@ -23,15 +41,12 @@ before_install:
   - source $PYVE_DIR/bin/activate
 
 install:
-  #- sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
-  #- wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
+  - sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
+  - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
   - sudo apt-get update -qq
   - sudo apt-get install -qq -y python-rosdep python-catkin-tools
-  #- pip install -U empy
-  #- pip install -U catkin_pkg
-  #- pip install -U catkin_tools
-  # rosdep init is not needed when building agains sr-indigo images
-  #- sudo rosdep init
+  # Note: rosdep init is not needed when building against sr-indigo images
+  - sudo rosdep init
   - rosdep update
   # Use rosdep to install all dependencies (including ROS itself)
   - rosdep install --from-paths ./ -i -y --rosdistro $CI_ROS_DISTRO
