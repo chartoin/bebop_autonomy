@@ -11,9 +11,16 @@ python:
 
 env:
   global:
+    - PYVE_DIR=$HOME/pythonve
     - CATKIN_WS=$HOME/catkin_ws
     - CATKIN_WS_SRC=${CATKIN_WS}/src
     - CI_ROS_DISTRO="indigo"
+
+before_install:
+  - rm -rf $PYVE_DIR
+  - mkdir -p $PYVE_DIR
+  - virtualenv --system-site-packages -p $SHIPPABLE_PYTHON $PYVE_DIR
+  - source $PYVE_DIR/bin/activate
 
 install:
   #- sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
